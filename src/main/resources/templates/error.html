@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Erro</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body>
+<div class="header">
+    <h1 class="title">Algo deu errado</h1>
+    <p class="subtitle">Não foi possível processar sua requisição agora.</p>
+</div>
+<div class="container">
+    <div class="card" style="text-align: center;">
+        <p style="color: var(--muted); margin: 0 0 12px;">Tente novamente em instantes ou volte para a lista de chamados.</p>
+        <a class="btn primary" th:href="@{/chamados}">Ir para chamados</a>
+    </div>
+</div>
+</body>
+</html>

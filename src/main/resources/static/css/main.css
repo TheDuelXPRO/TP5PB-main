@@ -1,0 +1,218 @@
+:root {
+    --primary: #1e88e5;
+    --primary-dark: #1565c0;
+    --success: #2e7d32;
+    --warning: #f9a825;
+    --danger: #c62828;
+    --bg: #f5f7fb;
+    --text: #1f2933;
+    --muted: #6b7b8c;
+    --card: #ffffff;
+    --border: #e4e8ef;
+    --shadow: 0 10px 30px rgba(31, 41, 51, 0.08);
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: radial-gradient(circle at 20% 20%, rgba(30,136,229,0.08), transparent 25%),
+                radial-gradient(circle at 80% 0%, rgba(20,143,119,0.08), transparent 20%),
+                var(--bg);
+    color: var(--text);
+}
+
+a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.header {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: #fff;
+    padding: 24px 32px;
+    box-shadow: var(--shadow);
+}
+
+.header .title {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.4px;
+}
+
+.header .subtitle {
+    margin: 6px 0 0;
+    color: rgba(255,255,255,0.85);
+}
+
+.container {
+    max-width: 1100px;
+    margin: -48px auto 48px;
+    padding: 0 20px;
+}
+
+.card {
+    background: var(--card);
+    border-radius: 18px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    padding: 24px;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+    transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.2s ease;
+}
+
+.btn.primary {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: #fff;
+    box-shadow: 0 10px 20px rgba(30, 136, 229, 0.3);
+}
+
+.btn.secondary {
+    background: #eef2f7;
+    color: var(--text);
+}
+
+.btn.danger {
+    background: #ffe5e5;
+    color: var(--danger);
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 24px rgba(31, 41, 51, 0.12);
+}
+
+.table-wrapper {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+}
+
+thead {
+    background: #f3f6fb;
+}
+
+thead th {
+    padding: 14px;
+    text-align: left;
+    font-weight: 700;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+}
+
+tbody td {
+    padding: 14px;
+    border-top: 1px solid var(--border);
+}
+
+.tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 13px;
+}
+
+.tag.status-ABERTO { background: #e3f2fd; color: var(--primary-dark); }
+.tag.status-EM_ANDAMENTO { background: #fff8e1; color: #f57f17; }
+.tag.status-FECHADO { background: #e8f5e9; color: var(--success); }
+
+.tag.prioridade-BAIXA { background: #eef2f7; color: var(--muted); }
+.tag.prioridade-MEDIA { background: #fff8e1; color: #f9a825; }
+.tag.prioridade-ALTA { background: #fff3e0; color: #ef6c00; }
+.tag.prioridade-CRITICA { background: #ffebee; color: var(--danger); }
+
+.alert {
+    padding: 14px 16px;
+    border-radius: 12px;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+.alert-success { background: #e8f5e9; color: var(--success); }
+.alert-warning { background: #fff8e1; color: #f9a825; }
+
+form label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 700;
+    color: var(--muted);
+}
+
+form input,
+form textarea,
+form select {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: #fdfefe;
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+form textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.error {
+    color: var(--danger);
+    font-size: 13px;
+    margin-top: -6px;
+    margin-bottom: 10px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+}
+
+.section-title {
+    margin: 0 0 12px;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--text);
+}
+
+.footer-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 12px;
+    color: var(--muted);
+    font-weight: 600;
+}

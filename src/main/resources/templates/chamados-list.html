@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Chamados</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body>
+<div class="header">
+    <h1 class="title">Central de Suporte</h1>
+    <p class="subtitle">Acompanhe e gerencie os chamados dos clientes com agilidade.</p>
+</div>
+
+<div class="container">
+    <div class="card">
+        <div class="actions">
+            <div>
+                <h2 class="section-title">Chamados</h2>
+                <p class="subtitle" style="color: var(--muted); margin:4px 0 0;">Visualize a fila e atualize o status rapidamente.</p>
+            </div>
+            <div style="display: flex; gap: 8px;">
+                <a class="btn primary" th:href="@{/chamados/novo}">Novo Chamado</a>
+            </div>
+        </div>
+
+        <div th:if="${mensagemSucesso}" class="alert alert-success" th:text="${mensagemSucesso}"></div>
+        <div th:if="${mensagemAviso}" class="alert alert-warning" th:text="${mensagemAviso}"></div>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Título</th>
+                    <th>Status</th>
+                    <th>Prioridade</th>
+                    <th style="width: 160px;">Ações</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="c : ${chamados}">
+                    <td th:text="${c.id}"></td>
+                    <td th:text="${c.titulo}"></td>
+                    <td>
+                        <span class="tag" th:classappend="' status-' + ${c.status}" th:text="${c.status}"></span>
+                    </td>
+                    <td>
+                        <span class="tag" th:classappend="' prioridade-' + ${c.prioridade}" th:text="${c.prioridade}"></span>
+                    </td>
+                    <td style="display: flex; gap: 8px;">
+                        <a class="btn secondary" th:href="@{/chamados/{id}/editar(id=${c.id})}">Editar</a>
+                        <form th:action="@{/chamados/{id}/excluir(id=${c.id})}" method="post" onsubmit="return confirm('Confirma exclusão?');">
+                            <button class="btn danger" type="submit">Excluir</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(chamados)}">
+                    <td colspan="5" style="text-align: center; color: var(--muted); padding: 20px;">Nenhum chamado cadastrado ainda.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

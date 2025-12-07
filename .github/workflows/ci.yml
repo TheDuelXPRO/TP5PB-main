@@ -1,0 +1,85 @@
+name: Pipeline Java CI/CD (Maven - Build, Testes e Deploy Simulado)
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  construir-e-testar:
+    runs-on: ubuntu-latest
+    env:
+      LANG: en_US.UTF-8
+      LC_ALL: en_US.UTF-8
+
+    steps:
+      - name: Baixar código
+        uses: actions/checkout@v4
+
+      - name: Configurar JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'maven'
+
+      - name: Executar build, testes e SAST com Maven
+        run: mvn -B clean verify org.owasp:dependency-check-maven:check -DskipTests=false
+
+      - name: Enviar artefato JAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: aplicacao-jar
+          path: target/*.jar
+
+  deploy-para-teste:
+    needs: construir-e-testar
+    runs-on: ubuntu-latest
+
+    environment:
+      name: teste
+      url: http://localhost:8080/chamados
+
+    steps:
+      - name: Baixar artefato gerado
+        uses: actions/download-artifact@v4
+        with:
+          name: aplicacao-jar
+          path: target/deploy
+
+      - name: Configurar tela virtual (Xvfb)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb
+          Xvfb :99 -ac -screen 0 1280x1024x24 &
+          echo "DISPLAY=:99" >> $GITHUB_ENV
+
+      - name: Iniciar servidor (deploy simulado)
+        run: |
+          echo "Iniciando servidor para testes de pós-deploy"
+          cd target/deploy
+          ARQUIVO_JAR=$(find . -name "*.jar")
+          nohup java -jar "$ARQUIVO_JAR" > servidor.log 2>&1 &
+          echo "Aguardando o servidor iniciar"
+          sleep 10
+
+      - name: Baixar código para testes pós-deploy
+        uses: actions/checkout@v4
+        with:
+          path: codigo-para-testes
+
+      - name: Configurar JDK para execução dos testes
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'maven'
+
+      - name: Executar testes Selenium pós-deploy
+        run: |
+          cd codigo-para-testes
+          mvn -B test
+        env:
+          DISPLAY: :99
