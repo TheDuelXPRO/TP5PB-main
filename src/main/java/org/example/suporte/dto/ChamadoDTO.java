@@ -29,22 +29,28 @@ public record ChamadoDTO(
 ) {
 
     public Chamado toNovoChamado() {
+        StatusChamado statusEnum = StatusChamado.valueOf(status.trim().toUpperCase());
+        PrioridadeChamado prioridadeEnum = PrioridadeChamado.valueOf(prioridade.trim().toUpperCase());
+
         return Chamado.abrir(
                 titulo,
                 descricao,
-                PrioridadeChamado.from(prioridade),
+                prioridadeEnum,
                 clienteEmail
         );
     }
 
     public void aplicarAtualizacao(Chamado chamado) {
+        PrioridadeChamado prioridadeEnum = PrioridadeChamado.valueOf(prioridade.trim().toUpperCase());
+        StatusChamado statusEnum = StatusChamado.valueOf(status.trim().toUpperCase());
+
         chamado.atualizarDetalhes(
                 titulo,
                 descricao,
-                PrioridadeChamado.from(prioridade),
+                prioridadeEnum,
                 clienteEmail
         );
-        chamado.alterarStatus(StatusChamado.from(status));
+        chamado.alterarStatus(statusEnum);
     }
 
     public static ChamadoDTO fromEntity(Chamado chamado) {
