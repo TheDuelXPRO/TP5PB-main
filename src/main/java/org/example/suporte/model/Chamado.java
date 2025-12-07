@@ -111,7 +111,7 @@ public class Chamado {
 
         this.status = novoStatus;
 
-        if (novoStatus.isFechado()) {
+        if (novoStatus == StatusChamado.FECHADO) {
             fecharChamado();
         } else {
             reabrirChamado();
