@@ -28,17 +28,6 @@ jobs:
       - name: Executar build, testes e SAST com Maven
         run: mvn -B clean verify org.owasp:dependency-check-maven:check -DskipTests=false
 
-      - name: Publicar relatórios de testes e cobertura
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: relatorios-ci
-          path: |
-            target/surefire-reports/
-            target/site/jacoco/
-            target/dependency-check-report.*
-          if-no-files-found: warn
-
       - name: Enviar artefato JAR
         uses: actions/upload-artifact@v4
         with:
@@ -94,14 +83,3 @@ jobs:
           mvn -B test
         env:
           DISPLAY: :99
-
-      - name: Publicar logs e relatórios pós-deploy
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: logs-pos-deploy
-          path: |
-            target/deploy/servidor.log
-            codigo-para-testes/target/surefire-reports/
-          if-no-files-found: warn
-
